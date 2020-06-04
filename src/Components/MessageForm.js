@@ -16,13 +16,18 @@ import { toast } from 'react-toastify';
 import { onAddMessage, onEditMessage } from '../Redux/Actions/message';
 
 const MessageSchema = object().shape({
+  title: string().required('Message title is required!'),
+  body: string()
+    .min(20, 'Body needs to be at least 20 characters!')
+    .required('Body is required!'),
+});
+const MessageSchemaAdd = object().shape({
   email: string().required('Email is required').email(),
   title: string().required('Message title is required!'),
   body: string()
     .min(20, 'Body needs to be at least 20 characters!')
     .required('Body is required!'),
 });
-
 const useStyles = makeStyles((theme) => ({
   addBtn: {
     position: 'fixed',
@@ -60,7 +65,7 @@ const MessageForm = ({
   const classes = useStyles();
   const [open, setOpen] = useState(isOpen);
   const { handleSubmit, register, errors } = useForm({
-    validationSchema: MessageSchema,
+    validationSchema: isEdit ? MessageSchema : MessageSchemaAdd,
     mode: 'onBlur',
   });
   const onSubmit = (data) => {

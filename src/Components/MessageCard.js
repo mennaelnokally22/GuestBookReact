@@ -87,7 +87,7 @@ const MessageCard = ({
           isEdit={true}
           isOpen={true}
           onClose={handleClose}
-          editingMessage={{ title, body, authorId: author, id: messageId }}
+          editingMessage={{ title, body, id: messageId }}
         />
       )}
     </Card>

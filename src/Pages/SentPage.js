@@ -68,6 +68,7 @@ const SentMessages = ({ messages, auth, history, fetchSentMessages }) => {
               body={message.body}
               author={message.authorId}
               isSent={true}
+              messageId={message._id}
             />
           ))}
         </Container>
