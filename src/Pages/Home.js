@@ -46,6 +46,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 const Home = ({ messages, auth, history, fetchMessages }) => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -53,6 +55,7 @@ const Home = ({ messages, auth, history, fetchMessages }) => {
     (async () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
       const data = await fetchMessages();
+      setLoading(false);
     })();
   }, []);
 
@@ -62,9 +65,14 @@ const Home = ({ messages, auth, history, fetchMessages }) => {
     <ThemeProvider theme={theme}>
       <div>
         <Navbar history={history} />
-        {messages.length === 0 && (
+        {messages.length === 0 && isLoading && (
           <Container className={classes.root}>
             <CircularProgress color='secondary' />
+          </Container>
+        )}
+        {messages.length === 0 && !isLoading && (
+          <Container className={classes.root}>
+            <p>There's no messages! &#128560;</p>
           </Container>
         )}
         <Container>

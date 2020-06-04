@@ -43,9 +43,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const SentMessages = ({ messages, auth, history, fetchSentMessages }) => {
+  const [isLoading, setLoading] = useState(true);
   useEffect(() => {
     (async () => {
       const data = await fetchSentMessages();
+      setLoading(false);
     })();
   }, []);
 
@@ -55,9 +57,14 @@ const SentMessages = ({ messages, auth, history, fetchSentMessages }) => {
     <ThemeProvider theme={theme}>
       <div>
         <Navbar history={history} />
-        {messages.length === 0 && (
+        {messages.length === 0 && isLoading && (
           <Container className={classes.root}>
             <CircularProgress color='secondary' />
+          </Container>
+        )}
+        {messages.length === 0 && !isLoading && (
+          <Container className={classes.root}>
+            <p>There's no messages! &#128560;</p>
           </Container>
         )}
         <Container>
