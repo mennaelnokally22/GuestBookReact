@@ -6,7 +6,7 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
@@ -17,7 +17,7 @@ import { toast } from 'react-toastify';
 import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
-import { signUp } from '../Redux/Actions/auth';
+import { signIn } from '../Redux/Actions/auth';
 
 const theme = createMuiTheme({
   overrides: {
@@ -82,8 +82,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const schema = object().shape({
-  firstName: string().required('First Name is required!'),
-  lastName: string().required('Last Name is required!'),
   email: string()
     .lowercase()
     .email('Invalid email address!')
@@ -93,8 +91,8 @@ const schema = object().shape({
     .required('Password is required!'),
 });
 
-const SignUp = ({ history, signUp }) => {
-  const classes = useStyles();
+const SignIn = ({ history, signIn }) => {
+  const classesNames = useStyles();
 
   const { register, handleSubmit, errors, formState } = useForm({
     validationSchema: schema,
@@ -103,56 +101,35 @@ const SignUp = ({ history, signUp }) => {
 
   const onSubmit = async (data) => {
     console.log(data);
-    signUp({ ...data })
+    signIn({ ...data })
       .then((data) => {
-        toast.success(`Signed up Successfully , Go and sign in now`);
-        history.replace('/sign-in');
+        toast.success(`Welcome`);
+        history.replace('/home');
       })
       .catch((err) => {
-        toast.error(`Seems that this email is already registered!`);
+        toast.error(`Invalid email or password`);
       });
   };
-
   return (
     <ThemeProvider theme={theme}>
-      <Container component='main' maxWidth='xs' className={classes.main}>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
+      <Container component='main' maxWidth='xs' className={classesNames.main}>
+        <div className={classesNames.paper}>
+          <Avatar className={classesNames.avatar}>
+            <LockOpenIcon />
           </Avatar>
-          <Typography component='h1' variant='h5' className={classes.heading}>
-            Sign up
+          <Typography
+            component='h1'
+            variant='h4'
+            className={classesNames.heading}
+          >
+            Sign in
           </Typography>
           <form
-            className={classes.form}
+            className={classesNames.form}
             onSubmit={handleSubmit(onSubmit)}
             noValidate
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  name='firstName'
-                  variant='standard'
-                  fullWidth
-                  id='firstName'
-                  label='First Name'
-                  error={!!errors.firstName}
-                  helperText={errors.firstName?.message}
-                  inputRef={register}
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  variant='standard'
-                  fullWidth
-                  id='lastName'
-                  label='Last Name'
-                  name='lastName'
-                  error={!!errors.lastName}
-                  helperText={errors.lastName?.message}
-                  inputRef={register}
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   variant='standard'
@@ -184,20 +161,15 @@ const SignUp = ({ history, signUp }) => {
               fullWidth
               variant='contained'
               color='primary'
-              className={classes.submit}
+              className={classesNames.submit}
               disabled={formState.isSubmitting}
             >
-              Sign Up
+              Sign In
             </Button>
             <Grid container justify='flex-end'>
               <Grid item>
-                <Link to='/sign-in' className={classes.link}>
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link to='/home' className={classes.link}>
-                  Or continue as anonymous user
+                <Link to='/' className={classesNames.link}>
+                  Don't have an account? Sign up
                 </Link>
               </Grid>
             </Grid>
@@ -209,7 +181,7 @@ const SignUp = ({ history, signUp }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  signUp: (user) => dispatch(signUp(user)),
+  signIn: (data) => dispatch(signIn(data)),
 });
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(null, mapDispatchToProps)(SignIn);

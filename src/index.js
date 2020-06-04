@@ -6,11 +6,16 @@ import * as serviceWorker from './serviceWorker';
 
 import { BrowserRouter } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { Provider } from 'react-redux';
+import store from './Redux/Store/store';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 ReactDOM.render(
   <BrowserRouter>
-    <CssBaseline />
-    <App />
+    <Provider store={store}>
+      <CssBaseline />
+      <App />
+    </Provider>
   </BrowserRouter>,
   document.getElementById('root')
 );
