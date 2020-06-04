@@ -64,8 +64,8 @@ const MessageForm = ({
     mode: 'onBlur',
   });
   const onSubmit = (data) => {
+    console.log(data);
     if (isEdit) {
-      console.log(data);
       onEditMessage(editingMessage.id, { ...data })
         .then((response) => {
           toast.success(`Message ${data.title} Updated successfully!`);
@@ -96,9 +96,9 @@ const MessageForm = ({
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby='form-dialog-title'
+        aria-labelledby='form-message-title'
       >
-        <DialogTitle id='form-dialog-title'>
+        <DialogTitle id='form-message-title'>
           {isEdit ? 'Edit Message' : 'Add Message'}
         </DialogTitle>
         <DialogContent className={classes.dialog}>
@@ -106,7 +106,7 @@ const MessageForm = ({
             <TextField
               id='title'
               name='title'
-              label='Blog Title'
+              label='Message Title'
               type='text'
               defaultValue={isEdit ? editingMessage.title : ''}
               fullWidth
@@ -118,7 +118,7 @@ const MessageForm = ({
             <TextField
               id='body'
               name='body'
-              label='Blog Body'
+              label='Message Body'
               defaultValue={isEdit ? editingMessage.body : ''}
               multiline
               rows='4'
@@ -128,7 +128,7 @@ const MessageForm = ({
               helperText={errors.body?.message}
               inputRef={register}
             />
-            {!isEdit && (
+            {isEdit === false ? (
               <TextField
                 id='email'
                 name='email'
@@ -138,6 +138,8 @@ const MessageForm = ({
                 margin='normal'
                 inputRef={register}
               />
+            ) : (
+              ''
             )}
             <Button
               type='submit'

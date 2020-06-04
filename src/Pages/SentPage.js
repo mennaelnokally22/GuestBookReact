@@ -13,7 +13,6 @@ import { fetchSentMessages } from '../Redux/Actions/message';
 import { Container } from '@material-ui/core';
 import Navbar from '../Components/Navbar';
 import MessageCard from '../Components/MessageCard';
-import MessageForm from '../Components/MessageForm';
 
 const theme = createMuiTheme({
   overrides: {
