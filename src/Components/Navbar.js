@@ -43,6 +43,9 @@ export default function Navbar({ history }) {
           <Button color='inherit' onClick={() => history.push('/home')}>
             Received
           </Button>
+          <Button color='inherit' onClick={() => history.replace('/sign-in')}>
+            Sign in
+          </Button>
         </Toolbar>
       </AppBar>
     </div>

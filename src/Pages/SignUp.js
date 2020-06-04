@@ -195,11 +195,6 @@ const SignUp = ({ history, signUp }) => {
                   Already have an account? Sign in
                 </Link>
               </Grid>
-              <Grid item>
-                <Link to='/home' className={classes.link}>
-                  Or continue as anonymous user
-                </Link>
-              </Grid>
             </Grid>
           </form>
         </div>
